@@ -23,6 +23,7 @@ call plug#begin()
    Plug 'fatih/vim-go', { 'for': 'go' }
    Plug 'chrisbra/csv.vim', { 'for': 'csv' }
    Plug 'sainnhe/gruvbox-material'
+   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " Turn on syntax highlighting
@@ -37,7 +38,7 @@ let mapleader = ","
 " Security
 set modelines=0
 
-" Show line numbers
+" Show relative line numbers
 set number relativenumber
 
 " Show file stats
@@ -63,10 +64,6 @@ set scrolloff=3
 set backspace=indent,eol,start
 set matchpairs+=<:> " use % to jump between pairs
 runtime! macros/matchit.vim
-
-" Move up/down editor lines
-nnoremap j gj
-nnoremap k gk
 
 " Allow hidden buffers
 set hidden
@@ -102,21 +99,22 @@ map <leader>l :set list!<CR> " Toggle tabs and EOL
 " Color scheme (terminal)
 set t_Co=256
 set background=dark
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
+colorscheme gruvbox-material
 
 " Do not create backup and swap files
 set nobackup
 set noswapfile
 
-" Remember the last positions
+" Remember the last positions in files
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
 
-" Set colorschema
-colorscheme gruvbox-material
-
-" Keymap configuration
-map <leader>t :NERDTreeToggle<cr> 
+" Keymap configurations
+" NERDTree operations
+nmap <C-n> :NERDTree<cr> " Can also be used to focus on the NERDTree window
+nmap <C-t> :NERDTreeToggle<cr> " Can also be used to close NERDTree
+nmap tt :tab split<CR> " Open splitted window in a new tab
+nmap tc :tab close<CR> " Close the tab/window
+nmap <leader>r :so ~/.vimrc<CR> " Reload the vimrc
