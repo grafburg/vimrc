@@ -3,6 +3,9 @@
 REPOURL="https://github.com/grafburg/vimrc.git"
 VIMDIR="$HOME/.config/vim"
 
+# Remove existing files
+rm -rf "$VIMDIR"
+
 # Create the vim directorie's
 mkdir -p "$VIMDIR" "$HOME/.vim"
 
@@ -10,8 +13,8 @@ mkdir -p "$VIMDIR" "$HOME/.vim"
 cd "$VIMDIR" && git clone "$REPOURL" . && cd -
 
 # Create symlink's
-ln -s "$VIMDIR/vimrc" "$HOME/.vimrc"
-ln -s "$VIMDIR/coc-settings.json" "$HOME/.vim/coc-settings.json"
+ln -sf "$VIMDIR/vimrc" "$HOME/.vimrc"
+ln -sf "$VIMDIR/coc-settings.json" "$HOME/.vim/coc-settings.json"
 
 # Install node
 curl -sL install-node.vercel.app/lts | sudo bash
