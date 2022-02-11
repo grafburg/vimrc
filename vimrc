@@ -18,12 +18,19 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 " Load plugins with vim-plug
 call plug#begin()
+   " File operation
    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } 
-   Plug 'junegunn/vim-easy-align'
+   " Formatting
+   " Plug 'junegunn/vim-easy-align'
+   " Languages
    Plug 'fatih/vim-go', { 'for': 'go' }
-   Plug 'chrisbra/csv.vim', { 'for': 'csv' }
-   Plug 'sainnhe/gruvbox-material'
+   " Coloschema
+   Plug 'tomasr/molokai'
+   " Autocomplete engine
    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+   " Snippets
+   Plug 'SirVer/ultisnips'
+   Plug 'honza/vim-snippets'
 call plug#end()
 
 " Turn on syntax highlighting
@@ -49,7 +56,6 @@ set visualbell
 
 " Encoding
 set encoding=utf-8
-
 " Whitespace
 set wrap
 set formatoptions=tcqrn1
@@ -75,9 +81,8 @@ set ttyfast
 set laststatus=2
 
 " Last line
-set showmode
+set showmode 
 set showcmd
-
 " Searching
 nnoremap / /\v
 vnoremap / /\v
@@ -92,14 +97,15 @@ map <leader><space> :let @/=''<cr> " clear search
 map <leader>q gqip
 
 " Visualize tabs and newlines
-set listchars=tab:▸\ ,eol:¬
-set list " To enable by default
-map <leader>l :set list!<CR> " Toggle tabs and EOL
+"set listchars=tab:▸\ ,eol:¬
+"set list " To enable by default
+"map <leader>l :set list!<CR> " Toggle tabs and EOL
 
 " Color scheme (terminal)
 set t_Co=256
 set background=dark
-colorscheme gruvbox-material
+set termguicolors
+colorscheme molokai
 
 " Do not create backup and swap files
 set nobackup
@@ -111,10 +117,22 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
+" Ultisnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" Default header for specific file (extensions)
+autocmd bufnewfile *.py so ~/.config/vim/headers/python3
+autocmd bufnewfile main.go so ~/.config/vim/headers/go
+
 " Keymap configurations
 " NERDTree operations
 nmap <C-n> :NERDTree<cr> " Can also be used to focus on the NERDTree window
+nmap <C-f> :NERDTreeFind<cr>
 nmap <C-t> :NERDTreeToggle<cr> " Can also be used to close NERDTree
 nmap tt :tab split<CR> " Open splitted window in a new tab
 nmap tc :tab close<CR> " Close the tab/window
 nmap <leader>r :so ~/.vimrc<CR> " Reload the vimrc
+
